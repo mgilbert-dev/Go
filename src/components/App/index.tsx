@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import Board from '~components/Board';
+import Settings from '~components/Settings';
 import { useStyles } from './style';
 
 interface AppProps {
@@ -12,6 +13,7 @@ export const App: FC<AppProps> = () => {
   return (
     <div className={classes.root}>
       <Board/>
+      <Settings/>
     </div>
   );
 };

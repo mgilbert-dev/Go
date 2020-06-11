@@ -13,9 +13,7 @@ render(
   <BrowserRouter>
     <RecoilRoot>
       <ThemeProvider theme={theme}>
-        <React.Suspense fallback="Loading...">
-          <App />
-        </React.Suspense>
+        <App />
       </ThemeProvider>
     </RecoilRoot>
   </BrowserRouter>

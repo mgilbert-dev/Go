@@ -10,7 +10,7 @@ export const historyAtom = atom({
     default: [INITIAL_BOARD_SMALL],
 });
 
-export const initialBoardSelector = selector({
+export const initialBoardSelector = selector<string>({
     key: 'initialBoard',
     get: ({ get }) => get(historyAtom)[0],
     set: ({ set }, newValue) => set(historyAtom,

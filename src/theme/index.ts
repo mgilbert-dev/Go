@@ -1,5 +1,11 @@
 const theme = {
-
+    presets: {
+        centered: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+    },
 };
 
 export default theme;

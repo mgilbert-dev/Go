@@ -1,11 +1,10 @@
-import React, { FC, useEffect, useCallback } from 'react';
+import React, { FC, useEffect, useCallback, useState } from 'react';
 import { useStyles } from './style';
 import Square from '~components/Square';
-import { getNumSquares, makeMove } from '~engine/board';
+import { getNumSquares, makeMove, findLegalMoves } from '~engine/board';
 import { SpecialValues } from '~engine/constants';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import {
-    legalMovesSelector,
     lastMoveSelector,
     endStateSelector,
     goRoomAtom,
@@ -18,8 +17,8 @@ export interface BoardProps {
 
 export const Board: FC<BoardProps> = () => {
     const board = useRecoilValue(boardSelector);
-    const setHistory = useSetRecoilState(historyAtom);
-    const legalMoves = useRecoilValue(legalMovesSelector);
+    const [history, setHistory] = useRecoilState(historyAtom);
+    const [legalMoves, setLegalMoves] = useState([]);
     const lastMove = useRecoilValue(lastMoveSelector);
     const endState = useRecoilValue(endStateSelector);
     const goRoom = useRecoilValue(goRoomAtom);
@@ -46,6 +45,10 @@ export const Board: FC<BoardProps> = () => {
             // dispatch(makeAIMove());
         }
     }, [canMove, goRoom]);
+
+    useEffect(() => {
+        setLegalMoves(findLegalMoves(board, history));
+    }, [board, history]);
 
     return (
         <div className={classes.root}>

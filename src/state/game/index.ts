@@ -21,15 +21,6 @@ export const currentTurnSelector = selector({
     get: ({ get }) => getCurrentTurn(get(boardSelector))
 });
 
-export const legalMovesSelector = selector({
-    key: 'legalMoves',
-    get: async ({ get }) => {
-        const latestBoard = get(boardSelector);
-        const history = get(historyAtom);
-        return engineWorker.getValidMoves(latestBoard, history);
-    },
-});
-
 export const turnsElapsedSelector = selector({
     key: 'turnsElapsed',
     get: ({ get }) => get(historyAtom).length - 1,

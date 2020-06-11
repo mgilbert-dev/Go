@@ -1,8 +1,9 @@
 import { makeStyles } from '@material-ui/styles';
+import { Theme } from '~theme';
 
 export const useStyles = makeStyles<any, {
     numSquaresPerSide: number,
-}>(theme => ({
+}>((theme: Theme) => ({
     root: ({ numSquaresPerSide }) => ({
         position: 'relative',
         backgroundColor: 'transparent',
