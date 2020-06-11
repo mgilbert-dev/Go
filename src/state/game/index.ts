@@ -2,9 +2,14 @@ import { selector, atom } from 'recoil';
 import { boardSelector, getNumSquares, historyAtom } from '~state/board';
 import { SpecialValues } from '~engine/constants';
 import { getWinner, findLegalMoves } from '~engine/board';
-import { Color, Piece } from '~engine/types';
+import { Color, Piece, WorkerInterface } from '~engine/types';
 import { GameState } from './types';
+import { wrap } from 'comlink';
 
+const engineWorker = wrap<WorkerInterface>(
+    new Worker('../../engine/engine.worker.ts')
+);
+  
 const getCurrentTurn = (board: string): Color => {
     return board[getNumSquares(board) + SpecialValues.CurrentTurn] === Color.White ?
         Color.Black :
@@ -18,11 +23,10 @@ export const currentTurnSelector = selector({
 
 export const legalMovesSelector = selector({
     key: 'legalMoves',
-    get: ({ get }) => {
+    get: async ({ get }) => {
         const latestBoard = get(boardSelector);
         const history = get(historyAtom);
-        const legalMoves = findLegalMoves(latestBoard, history);
-        return legalMoves;
+        return engineWorker.getValidMoves(latestBoard, history);
     },
 });
 
