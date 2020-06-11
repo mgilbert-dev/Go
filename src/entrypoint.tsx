@@ -6,11 +6,17 @@ import {
   RecoilRoot,
 } from 'recoil';
 import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from '@material-ui/styles';
+import theme from './theme';
 
 render(
   <BrowserRouter>
     <RecoilRoot>
-      <App />
+      <ThemeProvider theme={theme}>
+        <React.Suspense fallback="Loading...">
+          <App />
+        </React.Suspense>
+      </ThemeProvider>
     </RecoilRoot>
   </BrowserRouter>
   ,
